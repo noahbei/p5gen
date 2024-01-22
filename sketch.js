@@ -4,29 +4,47 @@ function setup() {
 
 function draw() {
   background(250);
-  let radius = width * 1.5;
-
-  //drag to move the world.
   orbitControl();
-
   normalMaterial();
-  translate(0, 0, 0);
-  for (let i = 0; i <= 12; i++) {
-    for (let j = 0; j <= 12; j++) {
-      push();
-      let a = (j / 12) * PI;
-      let b = (i / 12) * PI;
-      translate(
-        sin(2 * a) * radius * sin(b),
-        (cos(b) * radius) / 2,
-        cos(2 * a) * radius * sin(b)
-      );
-      if (j % 2 === 0) {
-        cone(30, 30);
-      } else {
-        box(30, 30, 30);
-      }
-      pop();
-    }
-  }
+  box(1, 1)
+
+  push()
+  translate(40, 0, 0)
+  box(30, 30);
+  pop()
+
+  push()
+  translate(-40, 0, 0)
+  box(30, 30);
+  pop()
+
+  push()
+  translate(40, 40, 0)
+  box(30, 30);
+  pop()
+
+  rotateX(frameCount * 0.01);
+
+  push()
+  translate(0, 40, 0)
+  box(30, 30);
+  pop()
+
+  push()
+  translate(0, -40, 0)
+  box(30, 30);
+  pop()
+
+  push()
+  translate(0, 0, 0)
+  box(30, 30);
+  pop()
+}
+
+function mousePressed() {
+  //make a random plane turn
+}
+
+function setUpCubes() {
+  // 26
 }
