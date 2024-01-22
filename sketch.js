@@ -1,3 +1,4 @@
+let i = 0
 function setup() {
   createCanvas(710, 400, WEBGL);
 }
@@ -23,7 +24,7 @@ function draw() {
   box(30, 30);
   pop()
 
-  rotateX(frameCount * 0.01);
+  rotateX(i);
 
   push()
   translate(0, 40, 0)
@@ -39,6 +40,8 @@ function draw() {
   translate(0, 0, 0)
   box(30, 30);
   pop()
+  if (i < (PI / 2))
+    i += .01
 }
 
 function mousePressed() {
@@ -48,3 +51,7 @@ function mousePressed() {
 function setUpCubes() {
   // 26
 }
+
+// have function that fills in the coordinates of the ones
+//that need to be rotated
+
