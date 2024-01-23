@@ -1,31 +1,3 @@
-let rotation1 = { x: 0, y: 0, z: 0 };
-let rotation2 = 0;
-let rotation3 = 0;
-let rotation4 = 0;
-let rotation5 = 0;
-let rotation6 = 0;
-let rotation7 = 0;
-let rotation8 = 0;
-let rotation9 = 0;
-let rotation10 = 0;
-let rotation11 = 0;
-let rotation12 = 0;
-let rotation13 = 0;
-let rotation14 = 0;
-let rotation15 = 0;
-let rotation16 = 0;
-let rotation17 = 0;
-let rotation18 = 0;
-let rotation19 = 0;
-let rotation20 = 0;
-let rotation21 = 0;
-let rotation22 = 0;
-let rotation23 = 0;
-let rotation24 = 0;
-let rotation25 = 0;
-let rotation26 = 0;
-let rotation27 = 0;
-
 let i = 0;
 let y = 0;
 let a = false;
@@ -34,7 +6,6 @@ let cubes = [];
 
 function setup() {
   createCanvas(710, 400, WEBGL);
-  //setUpCubes(numCubes);
 }
 
 function draw() {
@@ -42,7 +13,6 @@ function draw() {
   orbitControl();
   normalMaterial();
   drawBoxes();
-  
 }
 
 function mousePressed() {
@@ -52,39 +22,260 @@ function mousePressed() {
   //make a random plane turn
   animateCubes(randomAxis, randomRow, direction);
 }
-
-function setUpCubes(numCubes) {
-  cubes = [];
-  for (let i = 0; i < numCubes; i++) {
-    cubes.push({
-      rotationX: 0,
-      rotationY: 0,
-      rotationZ: 0,
-    });
+a = true
+function drawBoxes() {
+  if (a)
+  drawYAxisCubesDepth2()
+  else
+  drawXAxisCubesDepth1()
+  if (i < PI / 2) {
+    i += 0.02;
+  } else {
+    i = 0
+    a = false
   }
 }
 
-// have function that fills in the coordinates of the ones
-//that need to be rotated
-
-// if statment over each block releasing or holding it for each rotation
-function animateCubes(axis, row, direction) {
-  cubes.forEach((cube, index) => {
-    push();
-    rotateX(cube.rotationX + i);
-    rotateY(cube.rotationY + i);
-    rotateZ(cube.rotationZ + i);
-    translate(0, 40, 0);
-    box(30, 30);
-    pop();
-
-    cube[index].rotationX += i;
-    cube[index].rotationY += i;
-    cube[index].rotationZ += i;
-  });
+function drawCube(x, y, z) {
+  push();
+  translate(x, y, z);
+  box(30, 30);
+  pop();
 }
 
-function drawBoxes() {
+let coordinates = [
+  (40, 0, -40),
+  (40, 40, -40),
+  (40, -40, -40),
+  (0, 40, -40),
+  (0, -40, -40),
+  (0, 0, -40),
+  (-40, 0, -40),
+  (-40, -40, -40),
+  (-40, 40, -40),
+  (40, 0, 40),
+  (40, 40, 40),
+  (40, -40, 40),
+  (0, 40, 40),
+  (0, -40, 40),
+  (0, 0, 40),
+  (-40, 0, 40),
+  (-40, -40, 40),
+  (-40, 40, 40),
+  (40, 0, 0),
+  (40, 40, 0),
+  (40, -40, 0),
+  (0, 40, 0),
+  (0, -40, 0),
+  (0, 0, 0),
+  (-40, 0, 0),
+  (-40, -40, 0),
+  (-40, 40, 0)
+]
+
+function drawXAxisCubesDepth1() {
+  xOrderRight();
+  xOrderMiddle();
+  rotateX(i);
+  xOrderLeft();
+}
+
+function drawXAxisCubesDepth2() {
+  xOrderRight();
+  xOrderLeft();
+  rotateX(i);
+  xOrderMiddle();
+}
+
+function drawXAxisCubesDepth3() {
+  xOrderLeft();
+  xOrderMiddle();
+  rotateX(i);
+  xOrderRight();
+}
+
+
+function drawYAxisCubesDepth1() {
+  yOrderTop();
+  yOrderMiddle();
+  rotateY(i);
+  yOrderBottom();
+}
+
+function drawYAxisCubesDepth2() {
+  yOrderTop();
+  yOrderBottom();
+  rotateY(i);
+  yOrderMiddle();
+}
+
+function drawYAxisCubesDepth3() {
+  yOrderMiddle();
+  yOrderBottom();
+  rotateY(i);
+  yOrderTop();
+}
+
+
+function drawZAxisCubesDepth1() {
+  zOrderBack();
+  zOrderMiddle();
+  rotateZ(i);
+  zOrderFront();
+}
+
+function drawZAxisCubesDepth2() {
+  zOrderBack();
+  zOrderFront();
+  rotateZ(i);
+  zOrderMiddle();
+}
+
+function drawZAxisCubesDepth3() {
+  zOrderFront();
+  zOrderMiddle();
+  rotateZ(i);
+  zOrderBack();
+}
+
+//
+// Z
+//
+function zOrderFront() {
+  drawCube(40, 0, 40);
+  drawCube(40, 40, 40);
+  drawCube(40, -40, 40);
+  
+  drawCube(0, 40, 40);
+  drawCube(0, -40, 40);
+  drawCube(0, 0, 40);
+  
+  drawCube(-40, 0, 40)
+  drawCube(-40, -40, 40)
+  drawCube(-40, 40, 40)
+}
+
+function zOrderMiddle() {
+  drawCube(40, 0, 0);
+  drawCube(40, 40, 0);
+  drawCube(40, -40, 0);
+  
+  drawCube(0, 40, 0);
+  drawCube(0, -40, 0);
+  drawCube(0, 0, 0);
+
+  drawCube(-40, 0, 0)
+  drawCube(-40, -40, 0)
+  drawCube(-40, 40, 0)
+}
+
+function zOrderBack() {
+  drawCube(40, 0, -40);
+  drawCube(40, 40, -40);
+  drawCube(40, -40, -40);
+  
+  drawCube(0, 40, -40);
+  drawCube(0, -40, -40);
+  drawCube(0, 0, -40);
+  
+  drawCube(-40, 0, -40)
+  drawCube(-40, -40, -40)
+  drawCube(-40, 40, -40)
+}
+
+//
+// X
+//
+function xOrderLeft() {
+  drawCube(-40, 0, -40)
+  drawCube(-40, -40, -40)
+  drawCube(-40, 40, -40)
+  
+  drawCube(-40, 0, 0)
+  drawCube(-40, -40, 0)
+  drawCube(-40, 40, 0)
+  
+  drawCube(-40, 0, 40)
+  drawCube(-40, -40, 40)
+  drawCube(-40, 40, 40)
+}
+
+function xOrderMiddle() {
+  drawCube(0, 40, 40);
+  drawCube(0, -40, 40);
+  drawCube(0, 0, 40);
+  
+  drawCube(0, 40, -40);
+  drawCube(0, -40, -40);
+  drawCube(0, 0, -40);
+  
+  drawCube(0, 40, 0);
+  drawCube(0, -40, 0);
+  drawCube(0, 0, 0);
+}
+
+function xOrderRight() {
+  drawCube(40, 0, 0);
+  drawCube(40, 40, 0);
+  drawCube(40, -40, 0);
+  
+  drawCube(40, 0, -40);
+  drawCube(40, 40, -40);
+  drawCube(40, -40, -40);
+  
+  drawCube(40, 0, 40);
+  drawCube(40, 40, 40);
+  drawCube(40, -40, 40);
+}
+
+
+//
+// Y
+//
+function yOrderBottom() {
+  drawCube(-40, -40, -40);
+  drawCube(40, -40, -40);
+  drawCube(40, -40, 0);
+  drawCube(0, -40, 40);
+  drawCube(-40, -40, 0);
+  drawCube(0, -40, -40);
+  drawCube(0, -40, 0);
+  drawCube(40, -40, 40);
+  drawCube(-40, -40, 40);
+}
+
+function yOrderMiddle() {
+  drawCube(-40, 0, -40);
+  drawCube(40, 0, 0);
+  drawCube(0, 0, 40);
+  drawCube(-40, 0, 40);
+  drawCube(0, 0, -40);
+  drawCube(-40, 0, 0)
+  drawCube(0, 40, 0);
+  drawCube(0, 0, 0);
+  drawCube(40, 0, -40);
+  drawCube(40, 0, 40);
+}
+
+function yOrderTop() {
+  drawCube(0, 40, 40);
+  drawCube(40, 40, 0);
+  drawCube(-40, 40, -40);
+  drawCube(-40, 40, 0);
+  drawCube(0, 40, -40);
+  drawCube(40, 40, -40);
+  drawCube(-40, 40, 40);
+  drawCube(40, 40, 40);
+}
+
+
+
+
+
+
+
+
+/* function drawBoxes() {
   //rotateX(rotation1.x + i);
   //rotateY(rotation1.y + i);
   //rotateZ(rotation1.z + i);
@@ -134,11 +325,54 @@ function drawBoxes() {
   } else {
     i = PI / 2;
   }
-}
+} */
 
-function drawCube(x, y, z) {
-  push();
-  translate(x, y, z);
-  box(30, 30);
-  pop();
-}
+
+/* function setUpCubes(numCubes) {
+  cubes = [];
+  for (let i = 0; i < numCubes; i++) {
+    cubes.push({
+      rotationX: 0,
+      rotationY: 0,
+      rotationZ: 0,
+    });
+  }
+} */
+
+
+/* function animateCubes(axis, row, direction) {
+  cubes.forEach((cube, index) => {
+    push();
+    if (axis == "x") {
+      rotateX(cube.rotationX + i);
+      rotateY(cube.rotationY);
+      rotateZ(cube.rotationZ);
+    } else if (axis == "y") {
+      rotateY(cube.rotationY + i);
+      rotateX(cube.rotationY);
+      rotateZ(cube.rotationZ);
+    } else if (axis == "z") {
+      rotateZ(cube.rotationZ + i);
+      rotateY(cube.rotationY);
+      rotateX(cube.rotationZ);
+    }
+    
+    translate(coordinates[index]);
+    box(30, 30);
+    pop();
+
+    switch (axis) {
+      case "x":
+        cube[index].rotationX += i;
+        break;
+      case "y":
+        cube[index].rotationY += i;
+        break;
+      case "z":
+        cube[index].rotationZ += i;
+        break;
+      default:
+        break;
+    }
+  });
+} */
