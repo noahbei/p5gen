@@ -10,6 +10,7 @@ function setup() {
 }
 
 function draw() {
+  //translate(-sideLength/2 * 40, -sideLength/2 * 40, -sideLength/2 * 40);
   background(250);
   orbitControl();
   normalMaterial();
@@ -53,7 +54,9 @@ function generateAxisFunctions(axis, depth) {
         functionBody += `${axis}Order${j}();\n`;
       }
     }
+    functionBody += `translate(sideLength/2 * 40 - 20, sideLength/2 * 40- 20, sideLength/2 * 40- 20);`
     functionBody += `rotate${axis.toUpperCase()}(direction ? i : -i);\n`;
+    functionBody += `translate(-sideLength/2 * 40 + 20, -sideLength/2 * 40+ 20, -sideLength/2 * 40+ 20);`
     functionBody += `${axis}Order${i}();\n`
 
     functions.push(new Function('direction', `{
@@ -75,8 +78,6 @@ let zFunctions = generateAxisFunctions('z', 16);
 let drawingFunctions = xFunctions.concat(yFunctions, zFunctions);
 
 function generateZFunctions(depth) {
-  let functions = [];
-
   for (let i = 0; i < depth; i++) {
     let functionName = `zOrder${i + 1}`;
     let functionBody = '';
@@ -87,18 +88,14 @@ function generateZFunctions(depth) {
       }
     }
 
-    functions.push(new Function(`
-      function ${functionName}() {
-        ${functionBody}
-      }
-    `));
+    window[functionName] = new Function(`
+      ${functionBody}
+    `);
   }
-
-  return functions;
 }
 
   function generateYFunctions(depth) {
-    let functions = [];
+   
 
     for (let i = 0; i < depth; i++) {
       let functionName = `yOrder${i + 1}`;
@@ -110,19 +107,15 @@ function generateZFunctions(depth) {
         }
       }
 
-      functions.push(new Function(`
-        function ${functionName}() {
-          ${functionBody}
-        }
-      `));
+      window[functionName] = new Function(`
+      ${functionBody}
+    `);
     }
 
-    return functions;
+    
   }
 
 function generateXFunctions(depth) {
-  let functions = [];
-
   for (let i = 0; i < depth; i++) {
     let functionName = `xOrder${i + 1}`;
     let functionBody = '';
@@ -133,12 +126,8 @@ function generateXFunctions(depth) {
       }
     }
 
-    functions.push(new Function(`
-      function ${functionName}() {
-        ${functionBody}
-      }
-    `));
+    window[functionName] = new Function(`
+      ${functionBody}
+    `);
   }
-
-  return functions;
 }
