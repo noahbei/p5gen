@@ -1,8 +1,9 @@
 let i = 0;
 let a = true;
 let randDirection = true;
-//const numCubes = 27;
-//let cubes = [];
+
+const sideLength = 16;
+const planeNum = 3 * sideLength;
 
 function setup() {
   createCanvas(710, 400, WEBGL);
@@ -13,14 +14,6 @@ function draw() {
   orbitControl();
   normalMaterial();
   drawBoxes();
-}
-
-function mousePressed() {
-  const randomAxis = ["x", "y", "z"][Math.floor(Math.random() * 3)];
-  const randomRow = Math.floor(Math.random() * 3);
-  const direction = Boolean(Math.floor(Math.random() * 2));
-  //make a random plane turn
-  animateCubes(randomAxis, randomRow, direction);
 }
 
 function drawBoxes() {
@@ -35,7 +28,7 @@ function drawBoxes() {
     i += 0.02;
   } else {
     i = 0
-    let index = Math.floor(Math.random() * drawingFunctions.length);
+    let index = Math.floor(Math.random() * planeNum);
     randDirection = Boolean(Math.floor(Math.random() * 2))
     selectedFunction = drawingFunctions[index]
   }
@@ -48,319 +41,104 @@ function drawCube(x, y, z) {
   pop();
 }
 
-let drawingFunctions = [
-  drawXAxisCubesDepth1,
-  drawXAxisCubesDepth2,
-  drawXAxisCubesDepth3,
-  drawYAxisCubesDepth1,
-  drawYAxisCubesDepth2,
-  drawYAxisCubesDepth3,
-  drawZAxisCubesDepth1,
-  drawZAxisCubesDepth2,
-  drawZAxisCubesDepth3
-]
+function generateAxisFunctions(axis, depth) {
+  let functions = [];
 
+  for (let i = 1; i <= depth; i++) {
+    let functionName = `draw${axis}AxisCubesDepth${i}`;
+    let functionBody = '';
 
-function drawXAxisCubesDepth1(direction) {
-  xOrderRight();
-  xOrderMiddle();
-  rotateX(direction ? i : -i);
-  xOrderLeft();
-}
-
-function drawXAxisCubesDepth2(direction) {
-  xOrderRight();
-  xOrderLeft();
-  rotateX(direction ? i : -i);
-  xOrderMiddle();
-}
-
-function drawXAxisCubesDepth3(direction) {
-  xOrderLeft();
-  xOrderMiddle();
-  rotateX(direction ? i : -i);
-  xOrderRight();
-}
-
-
-function drawYAxisCubesDepth1(direction) {
-  yOrderTop();
-  yOrderMiddle();
-  rotateY(direction ? i : -i);
-  yOrderBottom();
-}
-
-function drawYAxisCubesDepth2(direction) {
-  yOrderTop();
-  yOrderBottom();
-  rotateY(direction ? i : -i);
-  yOrderMiddle();
-}
-
-function drawYAxisCubesDepth3(direction) {
-  yOrderMiddle();
-  yOrderBottom();
-  rotateY(direction ? i : -i);
-  yOrderTop();
-}
-
-
-function drawZAxisCubesDepth1(direction) {
-  zOrderBack();
-  zOrderMiddle();
-  rotateZ(direction ? i : -i);
-  zOrderFront();
-}
-
-function drawZAxisCubesDepth2(direction) {
-  zOrderBack();
-  zOrderFront();
-  rotateZ(direction ? i : -i);
-  zOrderMiddle();
-}
-
-function drawZAxisCubesDepth3(direction) {
-  zOrderFront();
-  zOrderMiddle();
-  rotateZ(direction ? i : -i);
-  zOrderBack();
-}
-
-//
-// Z
-//
-function zOrderFront() {
-  drawCube(40, 0, 40);
-  drawCube(40, 40, 40);
-  drawCube(40, -40, 40);
-  
-  drawCube(0, 40, 40);
-  drawCube(0, -40, 40);
-  drawCube(0, 0, 40);
-  
-  drawCube(-40, 0, 40)
-  drawCube(-40, -40, 40)
-  drawCube(-40, 40, 40)
-}
-
-function zOrderMiddle() {
-  drawCube(40, 0, 0);
-  drawCube(40, 40, 0);
-  drawCube(40, -40, 0);
-  
-  drawCube(0, 40, 0);
-  drawCube(0, -40, 0);
-  drawCube(0, 0, 0);
-
-  drawCube(-40, 0, 0)
-  drawCube(-40, -40, 0)
-  drawCube(-40, 40, 0)
-}
-
-function zOrderBack() {
-  drawCube(40, 0, -40);
-  drawCube(40, 40, -40);
-  drawCube(40, -40, -40);
-  
-  drawCube(0, 40, -40);
-  drawCube(0, -40, -40);
-  drawCube(0, 0, -40);
-  
-  drawCube(-40, 0, -40)
-  drawCube(-40, -40, -40)
-  drawCube(-40, 40, -40)
-}
-
-//
-// X
-//
-function xOrderLeft() {
-  drawCube(-40, 0, -40)
-  drawCube(-40, -40, -40)
-  drawCube(-40, 40, -40)
-  
-  drawCube(-40, 0, 0)
-  drawCube(-40, -40, 0)
-  drawCube(-40, 40, 0)
-  
-  drawCube(-40, 0, 40)
-  drawCube(-40, -40, 40)
-  drawCube(-40, 40, 40)
-}
-
-function xOrderMiddle() {
-  drawCube(0, 40, 40);
-  drawCube(0, -40, 40);
-  drawCube(0, 0, 40);
-  
-  drawCube(0, 40, -40);
-  drawCube(0, -40, -40);
-  drawCube(0, 0, -40);
-  
-  drawCube(0, 40, 0);
-  drawCube(0, -40, 0);
-  drawCube(0, 0, 0);
-}
-
-function xOrderRight() {
-  drawCube(40, 0, 0);
-  drawCube(40, 40, 0);
-  drawCube(40, -40, 0);
-  
-  drawCube(40, 0, -40);
-  drawCube(40, 40, -40);
-  drawCube(40, -40, -40);
-  
-  drawCube(40, 0, 40);
-  drawCube(40, 40, 40);
-  drawCube(40, -40, 40);
-}
-
-
-//
-// Y
-//
-function yOrderBottom() {
-  drawCube(-40, -40, -40);
-  drawCube(40, -40, -40);
-  drawCube(40, -40, 0);
-  drawCube(0, -40, 40);
-  drawCube(-40, -40, 0);
-  drawCube(0, -40, -40);
-  drawCube(0, -40, 0);
-  drawCube(40, -40, 40);
-  drawCube(-40, -40, 40);
-}
-
-function yOrderMiddle() {
-  drawCube(-40, 0, -40);
-  drawCube(40, 0, 0);
-  drawCube(0, 0, 40);
-  drawCube(-40, 0, 40);
-  drawCube(0, 0, -40);
-  drawCube(-40, 0, 0)
-  drawCube(0, 0, 0);
-  drawCube(40, 0, -40);
-  drawCube(40, 0, 40);
-}
-
-function yOrderTop() {
-  drawCube(0, 40, 40);
-  drawCube(40, 40, 0);
-  drawCube(-40, 40, -40);
-  drawCube(-40, 40, 0);
-  drawCube(0, 40, -40);
-  drawCube(40, 40, -40);
-  drawCube(-40, 40, 40);
-  drawCube(40, 40, 40);
-  drawCube(0, 40, 0);
-}
-
-
-
-
-
-
-
-
-/* function drawBoxes() {
-  //rotateX(rotation1.x + i);
-  //rotateY(rotation1.y + i);
-  //rotateZ(rotation1.z + i);
-
-  //back cubes
-  drawCube(40, 0, -40);
-  drawCube(40, 40, -40);
-  drawCube(40, -40, -40);
-  
-  drawCube(0, 40, -40);
-  drawCube(0, -40, -40);
-  drawCube(0, 0, -40);
-  
-  drawCube(-40, 0, -40)
-  drawCube(-40, -40, -40)
-  drawCube(-40, 40, -40)
-
-  //front cubes
-  drawCube(40, 0, 40);
-  drawCube(40, 40, 40);
-  drawCube(40, -40, 40);
-  
-  drawCube(0, 40, 40);
-  drawCube(0, -40, 40);
-  drawCube(0, 0, 40);
-  
-  drawCube(-40, 0, 40)
-  drawCube(-40, -40, 40)
-  drawCube(-40, 40, 40)
-
-  rotateZ(i)
-  //middle cubes
-  drawCube(40, 0, 0);
-  drawCube(40, 40, 0);
-  drawCube(40, -40, 0);
-  
-  drawCube(0, 40, 0);
-  drawCube(0, -40, 0);
-  drawCube(0, 0, 0);
-
-  drawCube(-40, 0, 0)
-  drawCube(-40, -40, 0)
-  drawCube(-40, 40, 0)
-
-  if (i < PI / 2) {
-    i += 0.02;
-  } else {
-    i = PI / 2;
-  }
-} */
-
-
-/* function setUpCubes(numCubes) {
-  cubes = [];
-  for (let i = 0; i < numCubes; i++) {
-    cubes.push({
-      rotationX: 0,
-      rotationY: 0,
-      rotationZ: 0,
-    });
-  }
-} */
-
-
-/* function animateCubes(axis, row, direction) {
-  cubes.forEach((cube, index) => {
-    push();
-    if (axis == "x") {
-      rotateX(cube.rotationX + i);
-      rotateY(cube.rotationY);
-      rotateZ(cube.rotationZ);
-    } else if (axis == "y") {
-      rotateY(cube.rotationY + i);
-      rotateX(cube.rotationY);
-      rotateZ(cube.rotationZ);
-    } else if (axis == "z") {
-      rotateZ(cube.rotationZ + i);
-      rotateY(cube.rotationY);
-      rotateX(cube.rotationZ);
+    for (let j = 1; j <= depth; j++) {
+      if (j != i) {
+        functionBody += `${axis}Order${j}();\n`;
+      }
     }
-    
-    translate(coordinates[index]);
-    box(30, 30);
-    pop();
+    functionBody += `rotate${axis.toUpperCase()}(direction ? i : -i);\n`;
+    functionBody += `${axis}Order${i}();\n`
 
-    switch (axis) {
-      case "x":
-        cube[index].rotationX += i;
-        break;
-      case "y":
-        cube[index].rotationY += i;
-        break;
-      case "z":
-        cube[index].rotationZ += i;
-        break;
-      default:
-        break;
+    functions.push(new Function('direction', `{
+      ${functionBody}
+    }`));
+  }
+
+  return functions;
+}
+
+let xOrderFunctions = generateXFunctions(16);
+let yOrderFunctions = generateYFunctions(16);
+let zOrderFunctions = generateZFunctions(16);
+
+let xFunctions = generateAxisFunctions('x', 16);
+let yFunctions = generateAxisFunctions('y', 16);
+let zFunctions = generateAxisFunctions('z', 16);
+
+let drawingFunctions = xFunctions.concat(yFunctions, zFunctions);
+
+function generateZFunctions(depth) {
+  let functions = [];
+
+  for (let i = 0; i < depth; i++) {
+    let functionName = `zOrder${i + 1}`;
+    let functionBody = '';
+
+    for (let x = 0; x < depth; x++) {
+      for (let y = 0; y < depth; y++) {
+        functionBody += `drawCube(${x * 40}, ${y * 40}, ${i * 40});\n`;
+      }
     }
-  });
-} */
+
+    functions.push(new Function(`
+      function ${functionName}() {
+        ${functionBody}
+      }
+    `));
+  }
+
+  return functions;
+}
+
+  function generateYFunctions(depth) {
+    let functions = [];
+
+    for (let i = 0; i < depth; i++) {
+      let functionName = `yOrder${i + 1}`;
+      let functionBody = '';
+
+      for (let x = 0; x < depth; x++) {
+        for (let z = 0; z < depth; z++) {
+          functionBody += `drawCube(${x * 40}, ${i * 40}, ${z * 40});\n`;
+        }
+      }
+
+      functions.push(new Function(`
+        function ${functionName}() {
+          ${functionBody}
+        }
+      `));
+    }
+
+    return functions;
+  }
+
+function generateXFunctions(depth) {
+  let functions = [];
+
+  for (let i = 0; i < depth; i++) {
+    let functionName = `xOrder${i + 1}`;
+    let functionBody = '';
+
+    for (let y = 0; y < depth; y++) {
+      for (let z = 0; z < depth; z++) {
+        functionBody += `drawCube(${i * 40}, ${y * 40}, ${z * 40});\n`;
+      }
+    }
+
+    functions.push(new Function(`
+      function ${functionName}() {
+        ${functionBody}
+      }
+    `));
+  }
+
+  return functions;
+}
