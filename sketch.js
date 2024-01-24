@@ -1,8 +1,7 @@
 let i = 0;
-let y = 0;
-let a = false;
-const numCubes = 27;
-let cubes = [];
+let a = true;
+//const numCubes = 27;
+//let cubes = [];
 
 function setup() {
   createCanvas(710, 400, WEBGL);
@@ -22,17 +21,19 @@ function mousePressed() {
   //make a random plane turn
   animateCubes(randomAxis, randomRow, direction);
 }
-a = true
+
 function drawBoxes() {
-  if (a)
-  drawYAxisCubesDepth2()
-  else
-  drawXAxisCubesDepth1()
+  if (a) {
+   selectedFunction = drawingFunctions[0]
+  a = false
+  }
+  selectedFunction();
   if (i < PI / 2) {
     i += 0.02;
   } else {
     i = 0
-    a = false
+    let index = Math.floor(Math.random() * drawingFunctions.length);
+    selectedFunction = drawingFunctions[index]
   }
 }
 
@@ -72,6 +73,19 @@ let coordinates = [
   (-40, -40, 0),
   (-40, 40, 0)
 ]
+
+let drawingFunctions = [
+  drawXAxisCubesDepth1,
+  drawXAxisCubesDepth2,
+  drawXAxisCubesDepth3,
+  drawYAxisCubesDepth1,
+  drawYAxisCubesDepth2,
+  drawYAxisCubesDepth3,
+  drawZAxisCubesDepth1,
+  drawZAxisCubesDepth2,
+  drawZAxisCubesDepth3
+]
+
 
 function drawXAxisCubesDepth1() {
   xOrderRight();
