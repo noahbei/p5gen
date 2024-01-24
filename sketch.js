@@ -1,5 +1,6 @@
 let i = 0;
 let a = true;
+let randDirection = true;
 //const numCubes = 27;
 //let cubes = [];
 
@@ -24,15 +25,18 @@ function mousePressed() {
 
 function drawBoxes() {
   if (a) {
-   selectedFunction = drawingFunctions[0]
-  a = false
+    let index = Math.floor(Math.random() * drawingFunctions.length);
+    selectedFunction = drawingFunctions[index]
+    a = false
   }
-  selectedFunction();
+  selectedFunction(randDirection);
+  console.log(randDirection)
   if (i < PI / 2) {
     i += 0.02;
   } else {
     i = 0
     let index = Math.floor(Math.random() * drawingFunctions.length);
+    randDirection = Boolean(Math.floor(Math.random() * 2))
     selectedFunction = drawingFunctions[index]
   }
 }
@@ -43,36 +47,6 @@ function drawCube(x, y, z) {
   box(30, 30);
   pop();
 }
-
-let coordinates = [
-  (40, 0, -40),
-  (40, 40, -40),
-  (40, -40, -40),
-  (0, 40, -40),
-  (0, -40, -40),
-  (0, 0, -40),
-  (-40, 0, -40),
-  (-40, -40, -40),
-  (-40, 40, -40),
-  (40, 0, 40),
-  (40, 40, 40),
-  (40, -40, 40),
-  (0, 40, 40),
-  (0, -40, 40),
-  (0, 0, 40),
-  (-40, 0, 40),
-  (-40, -40, 40),
-  (-40, 40, 40),
-  (40, 0, 0),
-  (40, 40, 0),
-  (40, -40, 0),
-  (0, 40, 0),
-  (0, -40, 0),
-  (0, 0, 0),
-  (-40, 0, 0),
-  (-40, -40, 0),
-  (-40, 40, 0)
-]
 
 let drawingFunctions = [
   drawXAxisCubesDepth1,
@@ -87,68 +61,68 @@ let drawingFunctions = [
 ]
 
 
-function drawXAxisCubesDepth1() {
+function drawXAxisCubesDepth1(direction) {
   xOrderRight();
   xOrderMiddle();
-  rotateX(i);
+  rotateX(direction ? i : -i);
   xOrderLeft();
 }
 
-function drawXAxisCubesDepth2() {
+function drawXAxisCubesDepth2(direction) {
   xOrderRight();
   xOrderLeft();
-  rotateX(i);
+  rotateX(direction ? i : -i);
   xOrderMiddle();
 }
 
-function drawXAxisCubesDepth3() {
+function drawXAxisCubesDepth3(direction) {
   xOrderLeft();
   xOrderMiddle();
-  rotateX(i);
+  rotateX(direction ? i : -i);
   xOrderRight();
 }
 
 
-function drawYAxisCubesDepth1() {
+function drawYAxisCubesDepth1(direction) {
   yOrderTop();
   yOrderMiddle();
-  rotateY(i);
+  rotateY(direction ? i : -i);
   yOrderBottom();
 }
 
-function drawYAxisCubesDepth2() {
+function drawYAxisCubesDepth2(direction) {
   yOrderTop();
   yOrderBottom();
-  rotateY(i);
+  rotateY(direction ? i : -i);
   yOrderMiddle();
 }
 
-function drawYAxisCubesDepth3() {
+function drawYAxisCubesDepth3(direction) {
   yOrderMiddle();
   yOrderBottom();
-  rotateY(i);
+  rotateY(direction ? i : -i);
   yOrderTop();
 }
 
 
-function drawZAxisCubesDepth1() {
+function drawZAxisCubesDepth1(direction) {
   zOrderBack();
   zOrderMiddle();
-  rotateZ(i);
+  rotateZ(direction ? i : -i);
   zOrderFront();
 }
 
-function drawZAxisCubesDepth2() {
+function drawZAxisCubesDepth2(direction) {
   zOrderBack();
   zOrderFront();
-  rotateZ(i);
+  rotateZ(direction ? i : -i);
   zOrderMiddle();
 }
 
-function drawZAxisCubesDepth3() {
+function drawZAxisCubesDepth3(direction) {
   zOrderFront();
   zOrderMiddle();
-  rotateZ(i);
+  rotateZ(direction ? i : -i);
   zOrderBack();
 }
 
@@ -265,7 +239,6 @@ function yOrderMiddle() {
   drawCube(-40, 0, 40);
   drawCube(0, 0, -40);
   drawCube(-40, 0, 0)
-  drawCube(0, 40, 0);
   drawCube(0, 0, 0);
   drawCube(40, 0, -40);
   drawCube(40, 0, 40);
@@ -280,6 +253,7 @@ function yOrderTop() {
   drawCube(40, 40, -40);
   drawCube(-40, 40, 40);
   drawCube(40, 40, 40);
+  drawCube(0, 40, 0);
 }
 
 
