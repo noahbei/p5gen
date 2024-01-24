@@ -7,6 +7,7 @@ const planeNum = 3 * sideLength;
 
 function setup() {
   createCanvas(710, 400, WEBGL);
+  camera(-900, -900, -900, 0, 0, 0, 2, 1, 3);
 }
 
 function draw() {
@@ -67,13 +68,13 @@ function generateAxisFunctions(axis, depth) {
   return functions;
 }
 
-let xOrderFunctions = generateXFunctions(16);
-let yOrderFunctions = generateYFunctions(16);
-let zOrderFunctions = generateZFunctions(16);
+let xOrderFunctions = generateXFunctions(sideLength);
+let yOrderFunctions = generateYFunctions(sideLength);
+let zOrderFunctions = generateZFunctions(sideLength);
 
-let xFunctions = generateAxisFunctions('x', 16);
-let yFunctions = generateAxisFunctions('y', 16);
-let zFunctions = generateAxisFunctions('z', 16);
+let xFunctions = generateAxisFunctions('x', sideLength);
+let yFunctions = generateAxisFunctions('y', sideLength);
+let zFunctions = generateAxisFunctions('z', sideLength);
 
 let drawingFunctions = xFunctions.concat(yFunctions, zFunctions);
 
