@@ -7,7 +7,7 @@ const planeNum = 3 * sideLength;
 
 function setup() {
   createCanvas(710, 400, WEBGL);
-  camera(-900, -900, -900, 0, 0, 0, 2, 1, 3);
+  camera(40 * sideLength * 3, 40 * sideLength* 3, 40 * sideLength* 3, sideLength/2 * 40 - 20, sideLength/2 * 40 - 20, sideLength/2 * 40 - 20, 0, 1, 0);
 }
 
 function draw() {
