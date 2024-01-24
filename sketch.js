@@ -31,7 +31,7 @@ function drawBoxes() {
   }
   selectedFunction(randDirection);
   console.log(randDirection)
-  if (i < PI / 2) {
+  if (i <= PI / 2) {
     i += 0.02;
   } else {
     i = 0
